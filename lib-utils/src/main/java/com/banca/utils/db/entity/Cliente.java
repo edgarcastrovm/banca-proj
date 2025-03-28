@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Cliente {
     @Id
     //@ColumnDefault("nextval('cliente_cliente_id_seq')")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Usar ID autogenerado por la BD
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cliente_id", nullable = false)
     private Integer id;
 

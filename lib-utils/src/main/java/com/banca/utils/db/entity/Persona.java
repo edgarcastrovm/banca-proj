@@ -10,7 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Persona {
     @Id
     //@ColumnDefault("nextval('persona_persona_id_seq')")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Usar ID autogenerado por la BD
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "persona_id", nullable = false)
     private Integer id;
 

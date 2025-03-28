@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -31,19 +33,34 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<?> post(@RequestBody Cliente cliente){
-        Cliente cliente_ =  clienteService.save(cliente);
-        if (cliente_ != null){
-            return ResponseEntity.ok(cliente_);
+        Cliente _cliente =  clienteService.save(cliente);
+        if (_cliente != null){
+            return ResponseEntity.ok(_cliente);
         }else return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping
-    public ResponseEntity<String> put(){
-        return ResponseEntity.ok("Actualiza");
+    @PutMapping("/{id}")
+    public ResponseEntity<?> put(@PathVariable Integer id,@RequestBody Cliente cliente){
+        Cliente _cliente =  clienteService.update(id,cliente);
+        if (_cliente != null){
+            return ResponseEntity.ok(_cliente);
+        }else return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(){
-        return ResponseEntity.ok("Elimina");
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> patch(@PathVariable Integer id, @RequestBody Map<String, Object> cliente){
+            Cliente _cliente =  clienteService.partialUpdate(id,cliente);
+            if (_cliente != null){
+                return ResponseEntity.ok(_cliente);
+            }else return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id){
+        boolean deleted = clienteService.delete(id);
+        if (deleted){
+            return ResponseEntity.ok("Deleted");
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
