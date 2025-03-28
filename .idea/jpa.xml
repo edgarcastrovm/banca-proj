@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="postgres" newRepositoryParent="org.springframework.data.jpa.repository.JpaRepository">
+    <option name="reLastEntityCreationPackage" value="lib-utils/src/main/java/com/banca/utils/entity" />
+    <option name="reverseEngineeringLastDbConnectionId" value="5faa4d6a-f339-4437-a137-24291a15c4d9__sistema_bancario_public" />
+  </component>
+</project>
