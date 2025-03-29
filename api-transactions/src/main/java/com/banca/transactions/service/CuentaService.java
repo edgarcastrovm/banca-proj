@@ -20,7 +20,11 @@ public class CuentaService {
 
     @Autowired
     ICuentaRepository cuentaRepository;
-    ApiMapper mapper = new ApiMapper();
+    private final ApiMapper mapper;
+
+    public CuentaService(ApiMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public List<Cuenta> findAll() {
         var cuentas = cuentaRepository.findAll();

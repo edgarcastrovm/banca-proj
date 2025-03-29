@@ -2,6 +2,7 @@ package com.banca.transactions.controller;
 
 import com.banca.transactions.service.MovimientoService;
 import com.banca.utils.db.entity.Movimiento;
+import com.banca.utils.dto.MovimientoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class MovimientoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable Integer id,@RequestBody Movimiento movimiento){
+    public ResponseEntity<?> put(@PathVariable Integer id,@RequestBody MovimientoDto movimiento){
         Movimiento _movimiento =  movimientoService.update(id,movimiento);
         if (_movimiento != null){
             return ResponseEntity.ok(_movimiento);

@@ -1,8 +1,10 @@
 package com.banca.transactions.service;
 
+import com.banca.transactions.mapper.ApiMapper;
 import com.banca.transactions.repository.IMovimientoRepository;
 import com.banca.utils.db.entity.Movimiento;
 import com.banca.utils.db.entity.Persona;
+import com.banca.utils.dto.MovimientoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ import java.util.stream.Collectors;
 public class MovimientoService {
     @Autowired
     IMovimientoRepository movimientoRepository;
+    private final ApiMapper apiMapper;
+
+    public MovimientoService(ApiMapper apiMapper) {
+        this.apiMapper = apiMapper;
+    }
+
 
     public List<Movimiento> findAll() {
         var movimientos = movimientoRepository.findAll();
@@ -31,25 +39,29 @@ public class MovimientoService {
     public Movimiento save(Movimiento movimiento) {
         return movimientoRepository.save(movimiento);
     }
-    public Movimiento update(Integer id,Movimiento movimiento) {
+    public Movimiento update(Integer id, MovimientoDto movimientoDto) {
         Movimiento movimientoToUpdate = findById(id);
         if (movimientoToUpdate == null) {
             return null;
         }
+        movimientoToUpdate.setFecha(movimientoDto.getFecha());
+        movimientoToUpdate.setTipoMovimiento(movimientoDto.getTipoMovimiento());
+        movimientoToUpdate.setValor(movimientoDto.getValor());
+        movimientoToUpdate.setSaldoAnterior(movimientoDto.getSaldoAnterior());
+        movimientoToUpdate.setSaldoPosterior(movimientoDto.getSaldoPosterior());
+        movimientoToUpdate.setDescripcion(movimientoDto.getDescripcion());
+
         return movimientoRepository.save(movimientoToUpdate);
     }
-    public Movimiento partialUpdate(Integer id, Map<String, Object> movimiento) {
+    public Movimiento partialUpdate(Integer id, Map<String, Object> movimientoMap) {
         Movimiento movimientoToUpdate = findById(id);
         if (movimientoToUpdate == null) {
             return null;
         }
-        movimiento.forEach((key, value) -> {
-            switch (key){
-                default:
-                    break;
-            }
-        });
-
+        movimientoToUpdate = apiMapper.movimientoHasMapToMovimiento(movimientoToUpdate, movimientoMap);
+        if (movimientoToUpdate == null) {
+            return null;
+        }
         return movimientoRepository.save(movimientoToUpdate);
     }
 
