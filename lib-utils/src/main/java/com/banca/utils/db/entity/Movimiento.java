@@ -1,5 +1,6 @@
 package com.banca.utils.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +15,15 @@ import java.time.Instant;
 @Table(name = "movimientos")
 public class Movimiento {
     @Id
-    @ColumnDefault("nextval('movimientos_movimiento_id_seq')")
+    //@ColumnDefault("nextval('movimientos_movimiento_id_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movimiento_id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cuenta_id", nullable = false)
+    @JsonIgnore
     private Cuenta cuenta;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

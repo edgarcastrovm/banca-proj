@@ -14,11 +14,12 @@ import java.time.LocalDate;
 @Table(name = "cuenta")
 public class Cuenta {
     @Id
-    @ColumnDefault("nextval('cuenta_cuenta_id_seq')")
+    //@ColumnDefault("nextval('cuenta_cuenta_id_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cuenta_id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;

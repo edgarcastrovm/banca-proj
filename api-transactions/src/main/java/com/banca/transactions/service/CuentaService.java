@@ -1,8 +1,15 @@
 package com.banca.transactions.service;
 
+import com.banca.transactions.constants.Constants;
+import com.banca.transactions.mapper.ApiMapper;
 import com.banca.transactions.repository.ICuentaRepository;
+import com.banca.utils.ApiClient;
+import com.banca.utils.db.entity.Cliente;
 import com.banca.utils.db.entity.Cuenta;
+import com.banca.utils.dto.CuentaDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +20,7 @@ public class CuentaService {
 
     @Autowired
     ICuentaRepository cuentaRepository;
+    ApiMapper mapper = new ApiMapper();
 
     public List<Cuenta> findAll() {
         var cuentas = cuentaRepository.findAll();
@@ -26,38 +34,32 @@ public class CuentaService {
         return cuentaRepository.findById(id).orElse(null);
     }
 
-    public Cuenta save(Cuenta cuenta) {
+    public Cuenta save(CuentaDto cuentaDto) {
+        Cuenta cuenta = mapper.CuentaDtoToCuenta(cuentaDto);
+        if (cuenta == null) {
+            return null;
+        }
         return cuentaRepository.save(cuenta);
     }
-    public Cuenta update(Integer id,Cuenta cuenta) {
-        Cuenta cuentaToUpdate = findById(id);
+
+    public Cuenta update(Integer id, CuentaDto cuentaDto) {
+        Cuenta cuenta = mapper.CuentaDtoToCuenta(cuentaDto);
+        if (cuenta == null) {
+            return null;
+        }
+        cuenta.setId(id);
+        return cuentaRepository.save(cuenta);
+    }
+
+    public Cuenta partialUpdate(Integer id, Map<String, Object> cuentaMap) {
+        Cuenta cuenta = findById(id);
+        if (cuenta == null) {
+            return null;
+        }
+        Cuenta cuentaToUpdate = mapper.CuentaHasMapToCuenta(cuenta, cuentaMap);
         if (cuentaToUpdate == null) {
             return null;
         }
         return cuentaRepository.save(cuentaToUpdate);
-    }
-    public Cuenta partialUpdate(Integer id, Map<String, Object> cuenta) {
-        Cuenta cuentaToUpdate = findById(id);
-        if (cuentaToUpdate == null) {
-            return null;
-        }
-        cuenta.forEach((key, value) -> {
-            switch (key){
-                default:
-                    break;
-            }
-        });
-
-        return cuentaRepository.save(cuentaToUpdate);
-    }
-
-    public boolean delete(Integer id) {
-        Cuenta cuentaToUpdate = findById(id);
-        if (cuentaToUpdate == null) {
-            return false;
-        }
-        cuentaToUpdate.setEstado(false);
-        cuentaRepository.save(cuentaToUpdate);
-        return true;
     }
 }

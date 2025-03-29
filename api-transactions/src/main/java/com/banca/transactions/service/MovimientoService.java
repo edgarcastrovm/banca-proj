@@ -29,12 +29,6 @@ public class MovimientoService {
     }
 
     public Movimiento save(Movimiento movimiento) {
-        Persona persona = movimiento.getPersona();
-        if (persona == null) {
-            return null;
-        }
-        persona = personaRepository.save(persona);
-        movimiento.setPersona(persona);
         return movimientoRepository.save(movimiento);
     }
     public Movimiento update(Integer id,Movimiento movimiento) {
@@ -42,12 +36,6 @@ public class MovimientoService {
         if (movimientoToUpdate == null) {
             return null;
         }
-        Persona personaToUpdate = movimiento.getPersona();
-        if (personaToUpdate == null) {
-            return null;
-        }
-        movimientoToUpdate.setPersona(personaToUpdate);
-
         return movimientoRepository.save(movimientoToUpdate);
     }
     public Movimiento partialUpdate(Integer id, Map<String, Object> movimiento) {
@@ -65,13 +53,4 @@ public class MovimientoService {
         return movimientoRepository.save(movimientoToUpdate);
     }
 
-    public boolean delete(Integer id) {
-        Movimiento movimientoToUpdate = findById(id);
-        if (movimientoToUpdate == null) {
-            return false;
-        }
-        movimientoToUpdate.setEstado(false);
-        movimientoRepository.save(movimientoToUpdate);
-        return true;
-    }
 }

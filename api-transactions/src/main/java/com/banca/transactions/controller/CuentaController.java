@@ -2,6 +2,7 @@ package com.banca.transactions.controller;
 
 import com.banca.transactions.service.CuentaService;
 import com.banca.utils.db.entity.Cuenta;
+import com.banca.utils.dto.CuentaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class CuentaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody Cuenta cuenta){
+    public ResponseEntity<?> post(@RequestBody CuentaDto cuenta){
         Cuenta _cuenta =  cuentaService.save(cuenta);
         if (_cuenta != null){
             return ResponseEntity.ok(_cuenta);
@@ -41,7 +42,7 @@ public class CuentaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable Integer id,@RequestBody Cuenta cuenta){
+    public ResponseEntity<?> put(@PathVariable Integer id,@RequestBody CuentaDto cuenta){
         Cuenta _cuenta =  cuentaService.update(id,cuenta);
         if (_cuenta != null){
             return ResponseEntity.ok(_cuenta);
