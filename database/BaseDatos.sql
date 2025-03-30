@@ -53,8 +53,23 @@ CREATE TABLE Movimientos (
      FOREIGN KEY (cuenta_id) REFERENCES Cuenta(cuenta_id) ON DELETE CASCADE
 );
 
--- Índices para mejorar el rendimiento opcionales
--- CREATE INDEX id1_cliente_persona ON Cliente(persona_id);
--- CREATE INDEX id1_cuenta_cliente ON Cuenta(cliente_id);
--- CREATE INDEX id1_movimientos_cuenta ON Movimientos(cuenta_id);
--- CREATE INDEX id1_movimientos_fecha ON Movimientos(fecha);
+-- Vista para consultar movimientos con información detallada
+CREATE VIEW vista_movimientos_detallados AS
+SELECT
+    m.movimiento_id,
+    c.numero_cuenta,
+    p.nombre AS cliente,
+    m.fecha,
+    m.tipo_movimiento,
+    m.valor,
+    m.saldo_anterior,
+    m.saldo_posterior,
+    m.descripcion
+FROM
+    Movimientos m
+        JOIN
+    Cuenta c ON m.cuenta_id = c.cuenta_id
+        JOIN
+    Cliente cl ON c.cliente_id = cl.cliente_id
+        JOIN
+    Persona p ON cl.persona_id = p.persona_id;

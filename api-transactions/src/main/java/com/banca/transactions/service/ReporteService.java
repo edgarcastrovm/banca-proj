@@ -2,6 +2,7 @@ package com.banca.transactions.service;
 
 import com.banca.transactions.report.IReport;
 import com.banca.transactions.report.ReportCsv;
+import com.banca.transactions.report.ReportPdf;
 import com.banca.transactions.repository.ICuentaRepository;
 import com.banca.transactions.repository.IVistaMovimientosDetalleRepository;
 import com.banca.utils.ApiResponse;
@@ -103,7 +104,7 @@ public class ReporteService {
         if (type.equals("json")) {
             return new ReportCsv();
         } else if (type.equals("pdf")) {
-            return new ReportCsv();
+            return new ReportPdf();
         }
         return null;
     }
