@@ -1,0 +1,62 @@
+networks:
+  internal-net:
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: sistema_bancario
+      POSTGRES_PASSWORD: claveapp
+    volumes:
+      - ./containers/postgres/database-init.sql:/docker-entrypoint-initdb.d/database-init.sql
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal-net
+
+  api-customer:
+    build:
+      context: ./app-target
+      dockerfile: ../containers/api-customer/Dockerfile
+      args:
+        APP_JAR: api-customer.jar
+    container_name: api-customer
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sistema_bancario
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: claveapp
+      SERVER_PORT: 8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    networks:
+      - internal-net
+
+  api-transacction:
+    build:
+      context: ./app-target
+      dockerfile: ../containers/api-customer/Dockerfile
+      args:
+        APP_JAR: api-transactions.jar
+    container_name: api-transacction
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sistema_bancario
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: claveapp
+      SERVER_PORT: 8082
+      API_CUSTOMER: http://api-customer:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8082:8082"
+    networks:
+      - internal-net

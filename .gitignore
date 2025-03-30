@@ -7,3 +7,4 @@ lib-utils/mvnw.cmd
 api-transactions/.mvn
 lib-utils/.mvn
 api-customer/.mvn
+deploy/app-target/*.jar
