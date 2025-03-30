@@ -19,7 +19,7 @@ import java.util.Map;
 public class CuentaService {
 
     @Autowired
-    ICuentaRepository cuentaRepository;
+    private ICuentaRepository cuentaRepository;
     private final ApiMapper mapper;
 
     public CuentaService(ApiMapper mapper) {

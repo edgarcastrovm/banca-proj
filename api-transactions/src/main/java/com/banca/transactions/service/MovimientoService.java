@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class MovimientoService {
     @Autowired
-    IMovimientoRepository movimientoRepository;
+    private IMovimientoRepository movimientoRepository;
     @Autowired
-    ICuentaRepository cuentaRepository;
+    private ICuentaRepository cuentaRepository;
     private final ApiMapper apiMapper;
 
     public MovimientoService(ApiMapper apiMapper) {
