@@ -112,6 +112,7 @@ public class ApiMapper {
         movimiento.setValor(movimientoDto.getValor());
         movimiento.setSaldoAnterior(movimientoDto.getSaldoAnterior());
         movimiento.setSaldoPosterior(movimientoDto.getSaldoPosterior());
+        movimiento.setDescripcion(movimientoDto.getDescripcion());
         return movimiento;
     }
 
