@@ -9,9 +9,7 @@ path_sql=$work_dir/../database/BaseDatos.sql
 path_postgres=$work_dir/containers/postgres
 echo "------------------------------------------------------------------------------------------------"
 echo "------------------------------------ COMPIA DLL DE LAS TABLAS ----------------------------------"
-cat $path_sql
 cat $path_sql > $path_postgres/database-init.sql
-cat $path_postgres/database-init.sql
 
 echo "------------------------------------------------------------------------------------------------"
 echo "------------------------------------ COMPILA LIBRERIA ------------------------------------------"
@@ -41,5 +39,5 @@ echo "Esperando a que los servicios inicien..."
 sleep 35 #En promedio esto tarda en levantar los contenedores
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 echo "------------------------------------------------------------------------------------------------"
-echo "------------------------------------ INSTALACIÓN COMPLETA !!!!"
+echo "------------------------------------ INSTALACIÓN COMPLETA !!!! ---------------------------------"
 echo "------------------------------------------------------------------------------------------------"

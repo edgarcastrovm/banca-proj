@@ -1,5 +1,6 @@
 package com.banca.transactions.mapper;
 
+import com.banca.transactions.config.ApiUrlProperties;
 import com.banca.transactions.constants.Constants;
 import com.banca.transactions.repository.ICuentaRepository;
 import com.banca.utils.ApiClient;
@@ -23,10 +24,12 @@ public class ApiMapper {
     ApiClient apiClient;
 
     private final ICuentaRepository cuentaRepository;
+    private final ApiUrlProperties apiUrlProperties;
 
-    public ApiMapper(ICuentaRepository cuentaRepository) {
+    public ApiMapper(ICuentaRepository cuentaRepository, ApiUrlProperties apiUrlProperties) {
         this.cuentaRepository = cuentaRepository;
-        apiClient = new ApiClient(Constants.API_CUSTOMER);
+        this.apiUrlProperties = apiUrlProperties;
+        apiClient = new ApiClient(apiUrlProperties.getCustomerUrl());
     }
 
     public Cuenta CuentaDtoToCuenta(CuentaDto cuentaDto) {
