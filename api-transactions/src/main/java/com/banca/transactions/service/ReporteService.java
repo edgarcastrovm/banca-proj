@@ -61,7 +61,7 @@ public class ReporteService {
             resumen.setSaldoActual(cuenta.getSaldoActual());
             //Detalle de movimientos
             List<VistaMovimientosDetalle> movimientos = ivistaMovimientosDetalleRepository
-                    .findByNumeroCuentaAfterAndFechaBetween(cuenta.getNumeroCuenta(), inicio, fin);
+                    .findByNumeroCuentaAndFechaBetween(cuenta.getNumeroCuenta(), inicio, fin);
             List<MovimientoDetalle> detalles = new ArrayList<MovimientoDetalle>();
             movimientos.forEach(movimiento -> {
                 MovimientoDetalle detalle =new MovimientoDetalle();

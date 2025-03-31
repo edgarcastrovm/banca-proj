@@ -12,5 +12,6 @@ public interface IVistaMovimientosDetalleRepository extends JpaRepository<VistaM
             Instant fechaInicio,
             Instant fechaFin);
 
-    List<VistaMovimientosDetalle> findByNumeroCuentaAfterAndFechaBetween(String numeroCuenta, Instant inicio, Instant fin);
+    List<VistaMovimientosDetalle> findByNumeroCuentaAndFechaBetween(String numeroCuenta, Instant inicio, Instant fin);
+
 }
